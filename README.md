@@ -17,6 +17,8 @@ Something is being assembled out in the dark. Worker drones mine crystals from t
 | X or Shift | launch bomb (homes on the Maw) |
 | P / M | pause / mute |
 
+An extra ship is awarded every 50,000 points.
+
 Touch controls appear automatically on phones.
 
 ## How it works

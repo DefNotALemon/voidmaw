@@ -90,6 +90,7 @@ html,body{height:100%;margin:0;overflow:hidden;background:var(--ground);color:va
         <b>X / SHIFT</b><span>launch bomb (homes on the Maw)</span>
         <b>P · M</b><span>pause · mute</span>
       </div>
+      <p style="margin-top:14px;font-size:12px;letter-spacing:.15em;text-transform:uppercase">Extra ship every 50,000 points</p>
       <button id="start">Launch</button>
       <div class="foot" id="hi">Best 0</div>
     </div>
@@ -163,7 +164,7 @@ if('ontouchstart' in window||navigator.maxTouchPoints>0){wrap.classList.add('tou
   bind('tl','l');bind('tr','r');bind('tt','t');bind('tf','f');bind('tk','k');
   $('tb').addEventListener('pointerdown',e=>{e.preventDefault();ac();if(S.mode==='play')launchBomb();});
 }
-function startGame(){S.mode='play';S.score=0;S.zone=1;S.lives=3;S.bombs=0;ov.hidden=true;newZone(1);hud(true);}
+function startGame(){S.mode='play';S.score=0;S.zone=1;S.lives=3;S.bombs=0;S.nextLife=50000;ov.hidden=true;newZone(1);hud(true);}
 
 /* ---------- helpers ---------- */
 function burst(x,y,n,col,sp){for(let i=0;i<n;i++){const a=Math.random()*TAU,v=rnd(0.5,sp||4);parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:rnd(20,50),c:col});}}
@@ -266,6 +267,7 @@ function update(){
       else{boss.parts=Math.max(0,boss.parts-1);S.score+=50;}hud();}}
   // particles
   for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.x+=p.vx;p.y+=p.vy;p.vx*=0.96;p.vy*=0.96;if(--p.l<=0)parts.splice(i,1);}
+  if(S.score>=S.nextLife){S.nextLife+=50000;S.lives++;flash('EXTRA SHIP',100);tone(660,0.15,'square',0.06,400);setTimeout(()=>tone(990,0.3,'square',0.06,300),130);hud(true);}
   if(frame%20===0)hud();
 }
 function gameOver(){S.mode='over';if(S.score>S.hi){S.hi=S.score;try{localStorage.setItem('voidmaw_hi',String(S.hi));}catch(e){}}
